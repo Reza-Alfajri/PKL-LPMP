@@ -80,9 +80,9 @@
 								<a href="#" class="edit" aria-label="edit">
 								<span aria-hidden="true"><i class="fa fa-edit"></i></span>
 								</a>
-						      	<a href="#" class="close" data-dismiss="alert" aria-label="Close">
-				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
-				          		</a>
+						      		<a href="hapus.php?nip=<?=$list['nip']; ?>" class="close" aria-label="Close">
+				            			<span aria-hidden="true"><i class="fa fa-close"></i></span>
+				          			</a>
 				        	</td>
 						    </tr>
 							<?php endwhile; ?>
