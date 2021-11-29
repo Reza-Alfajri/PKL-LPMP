@@ -1,5 +1,6 @@
 <?php 
     // Nama File : koneksi.php
+    //angga cobe cobe
     $server = "localhost";
     $user = "root";
     $password = "";
