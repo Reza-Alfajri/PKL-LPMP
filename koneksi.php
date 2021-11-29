@@ -1,6 +1,7 @@
 <?php 
     // Nama File : koneksi.php
     //angga cobe cobe
+    // buat anak kok coba-coba
     $server = "localhost";
     $user = "root";
     $password = "";
