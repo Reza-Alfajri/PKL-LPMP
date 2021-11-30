@@ -90,7 +90,7 @@
                     <form action="proses_daftar.php" method="POST">
                       <fieldset>
                           <p><label for="timestamp">Timestamp : </label>
-                              <input type="date" name="timestamp" class="form-control"></p>
+                              <input type="datetime-local" name="timestamp" class="form-control"></p>
                           <p><label for="nama_kegiatan">Nama Kegiatan: </label>
                               <input type="text" name="nama_kegiatan" class="form-control"></p>
                           <p><label for="tanggal_awal">Tanggal Awal : </label>
@@ -124,11 +124,6 @@
                           <p><label for="no_hp">No. HP : </label>
                               <input type="text" name="no_hp" class="form-control"></p>
                           <p><label>Wisma : </label>
-                          <select name="wisma" class="custom-select">
-                              <option value="">-- wisma --</option>
-                              <option value="handayani">Handayani</option>
-                              <option value="anggrek">Anggrek</option>
-                          </select> 
                           <p><label for="nomor_kamar">No. Kamar: </label>
                               <input type="text" name="nomor_kamar" class="form-control"></p>
                           <p><input type="submit" value="Daftar" name="daftar" class="btn btn-primary"></p>
