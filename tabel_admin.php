@@ -29,7 +29,8 @@
                         <label for="nip">NIP</label>
                         <input type="radio" name="kategori" value="cariKamar">
                         <label for="nomor">Nomor Kamar</label> <br>
-                        <a href="tabel_admin.php">Reset</a>
+                        <a href="tabel_admin.php"><i class="fa fa-refresh"></i>Reset</a>
+						<a href="form_daftar.php"><i class="fa fa-clipboard"></i>Daftar</a>
                     </form>
 				</div>
 			</div>
@@ -70,25 +71,9 @@
                                             $cari = $_GET['cari'];
                                             $sql = "SELECT * FROM karyawan WHERE nama_tamu like '%".$cari."%'";
                                             $sql1 = "SELECT * FROM karyawan WHERE nama_tamu LIKE '%$cari%' limit $start,$hal";
-                                            // if(isset($_POST["asc"])){
-                                            //    $sql1 = "SELECT * FROM mahasiswa WHERE 
-                                            //     ORDER BY nama ASC
-                                            //     LIMIT $start,$hal";
-                                            // }
-                                            // if(isset($_POST["desc"])){
-                                            //    $sql1 = "SELECT * FROM mahasiswa WHERE 
-                                            //     ORDER BY nama DESC
-                                            //     LIMIT $start,$hal";
-                                            // }
                                         } else {
                                             $sql = "SELECT * FROM karyawan";
                                             $sql1 = "SELECT * FROM karyawan limit $start,$hal";
-                                            // if(isset($_POST["asc"])){
-                                            //    $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
-                                            // }
-                                            // if(isset($_POST["desc"])){
-                                            //    $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
-                                            // }
                                         }
 
                                         if (isset($_GET['cari']) && isset($_GET['kategori'])) {
@@ -96,40 +81,16 @@
                                                 if ($_GET['kategori'] == 'cariNama') {
                                                     $sql = "SELECT * FROM karyawan WHERE nama_tamu LIKE '%$cari%'";
                                                     $sql1 = "SELECT * FROM karyawan WHERE nama_tamu LIKE '%$cari%' limit $start,$hal";
-                                                    // if(isset($_POST["asc"])){
-                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
-                                                    // }
-                                                    // if(isset($_POST["desc"])){
-                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
-                                                    // }
                                                 } elseif ($_GET['kategori'] == 'cariNIP') {
                                                     $sql = "SELECT * FROM karyawan WHERE nip LIKE '%$cari%'";
                                                     $sql1 = "SELECT * FROM karyawan WHERE nip LIKE '%$cari%' limit $start,$hal";
-                                                    // if(isset($_POST["asc"])){
-                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
-                                                    // }
-                                                    // if(isset($_POST["desc"])){
-                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
-                                                    // }
                                                 } else {
                                                     $sql = "SELECT * FROM karyawan WHERE nomor_kamar LIKE '%$cari%'";
                                                     $sql1 = "SELECT * FROM karyawan WHERE nomor_kamar LIKE '%$cari%' limit $start,$hal";
-                                                    // if(isset($_POST["asc"])){
-                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
-                                                    // }
-                                                    // if(isset($_POST["desc"])){
-                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
-                                                    // }
                                                     }  
                                             } else {
                                                 $sql = "SELECT * FROM karyawan";
                                                 $sql1 = "SELECT * FROM karyawan limit $start,$hal";
-                                                // if(isset($_POST["asc"])){
-                                                //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
-                                                // }
-                                                // if(isset($_POST["desc"])){
-                                                //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
-                                                // }
                                             }
                                             $query = mysqli_query($db, $sql);
                                             $query1 = mysqli_query($db, $sql1);
@@ -157,12 +118,25 @@
                                     <td><?= $list['wisma']; ?></td>
                                     <td><?= $list['nomor_kamar']; ?></td>
                                     <td>
-                                        <a href="form_edit.php?nip=<?=$list['nip']; ?>" class="edit" aria-label="edit">
+										<a href="form_edit.php?nip=<?=$list['nip']; ?>" class="edit" aria-label="edit">
                                         <span aria-hidden="true"><i class="fa fa-edit"></i></span>
                                         </a>
-                                        <a href="hapus.php?nip=<?=$list['nip']; ?>" class="close" aria-label="Close">
+                                        <button class="close" aria-label="Close" onclick="hapus()">
                                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                        </a>
+										</button>
+										<script type="text/javascript">
+  										function hapus(){
+											Swal.fire({
+  											title: 'Anda yakin akan menghapus data?',
+  											showCancelButton: true,
+											confirmButtonText: 'Hapus',
+										}).then((result) => {
+												if (result.isConfirmed) {
+													window.location.href = "hapus.php?nip=<?=$list['nip']; ?>";
+												}
+											})
+										}
+										</script>
                                     </td>
                                 </tr>
 							    <?php endwhile; ?>
@@ -189,5 +163,8 @@
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+	<!-- JS SWEETALERT -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </body>
 </html>
