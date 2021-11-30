@@ -157,7 +157,7 @@
                                     <td><?= $list['wisma']; ?></td>
                                     <td><?= $list['nomor_kamar']; ?></td>
                                     <td>
-                                        <a href="#" class="edit" aria-label="edit">
+                                        <a href="form_edit.php?nip=<?=$list['nip']; ?>" class="edit" aria-label="edit">
                                         <span aria-hidden="true"><i class="fa fa-edit"></i></span>
                                         </a>
                                         <a href="hapus.php?nip=<?=$list['nip']; ?>" class="close" aria-label="Close">
