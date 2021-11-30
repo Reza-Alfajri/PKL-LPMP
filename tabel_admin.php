@@ -20,9 +20,16 @@
 					<h2 class="heading-section">Tamu Wisma</h2>
 				</div>
                 <div class="col-md-6 text-center mb-5">
-                    <form action="tabel_tamu.php" method="GET">
+                    <form action="tabel_admin.php" method="GET">
                         <input type="text" name="cari" value="<?php if(isset($_GET['cari'])){echo $_GET['cari'];}?>">
                         <input type="submit" value="cari">
+                        <input type="radio" name="kategori" value="cariNama" checked>
+                        <label for="nama">Nama Tamu</label>
+                        <input type="radio" name="kategori" value="cariNIP">
+                        <label for="nip">NIP</label>
+                        <input type="radio" name="kategori" value="cariKamar">
+                        <label for="nomor">Nomor Kamar</label> <br>
+                        <a href="tabel_admin.php">Reset</a>
                     </form>
 				</div>
 			</div>
@@ -55,27 +62,80 @@
                                         $hal=10;
                                         $page=isset($_GET['hal'])?(int)$_GET['hal']:1;
                                         $start=($page>1)?($page*$hal)-$hal:0;
-                                            if(isset($_GET['cari'])){
-                                                $cari=$_GET['cari'];
-                                                echo "Hasil Pencarian : ".$cari;
-                                            }
-                                            if(isset($_GET['cari'])){
-                                                $cari=$_GET['cari'];
-                                                //agar bisa mencari bedasarkan nip
-                                                $sql ="SELECT * FROM karyawan WHERE
-                                                        nip LIKE '%$cari%'";
-                                                $sql1 ="SELECT * FROM karyawan WHERE
-                                                        nip LIKE '%$cari%'
-                                                        LIMIT $start,$hal";
+                                        if(isset($_GET['cari'])){
+                                            $cari = $_GET['cari'];
+                                            echo "Hasil Pencarian : ".$cari;
+                                        }
+                                        if(isset($_GET['cari'])){
+                                            $cari = $_GET['cari'];
+                                            $sql = "SELECT * FROM karyawan WHERE nama_tamu like '%".$cari."%'";
+                                            $sql1 = "SELECT * FROM karyawan WHERE nama_tamu LIKE '%$cari%' limit $start,$hal";
+                                            // if(isset($_POST["asc"])){
+                                            //    $sql1 = "SELECT * FROM mahasiswa WHERE 
+                                            //     ORDER BY nama ASC
+                                            //     LIMIT $start,$hal";
+                                            // }
+                                            // if(isset($_POST["desc"])){
+                                            //    $sql1 = "SELECT * FROM mahasiswa WHERE 
+                                            //     ORDER BY nama DESC
+                                            //     LIMIT $start,$hal";
+                                            // }
+                                        } else {
+                                            $sql = "SELECT * FROM karyawan";
+                                            $sql1 = "SELECT * FROM karyawan limit $start,$hal";
+                                            // if(isset($_POST["asc"])){
+                                            //    $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
+                                            // }
+                                            // if(isset($_POST["desc"])){
+                                            //    $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
+                                            // }
+                                        }
+
+                                        if (isset($_GET['cari']) && isset($_GET['kategori'])) {
+                                                $cari = $_GET['cari'];
+                                                if ($_GET['kategori'] == 'cariNama') {
+                                                    $sql = "SELECT * FROM karyawan WHERE nama_tamu LIKE '%$cari%'";
+                                                    $sql1 = "SELECT * FROM karyawan WHERE nama_tamu LIKE '%$cari%' limit $start,$hal";
+                                                    // if(isset($_POST["asc"])){
+                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
+                                                    // }
+                                                    // if(isset($_POST["desc"])){
+                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
+                                                    // }
+                                                } elseif ($_GET['kategori'] == 'cariNIP') {
+                                                    $sql = "SELECT * FROM karyawan WHERE nip LIKE '%$cari%'";
+                                                    $sql1 = "SELECT * FROM karyawan WHERE nip LIKE '%$cari%' limit $start,$hal";
+                                                    // if(isset($_POST["asc"])){
+                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
+                                                    // }
+                                                    // if(isset($_POST["desc"])){
+                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
+                                                    // }
+                                                } else {
+                                                    $sql = "SELECT * FROM karyawan WHERE nomor_kamar LIKE '%$cari%'";
+                                                    $sql1 = "SELECT * FROM karyawan WHERE nomor_kamar LIKE '%$cari%' limit $start,$hal";
+                                                    // if(isset($_POST["asc"])){
+                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
+                                                    // }
+                                                    // if(isset($_POST["desc"])){
+                                                    //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
+                                                    // }
+                                                    }  
                                             } else {
-                                                $sql ="SELECT * FROM karyawan";
-                                                $sql1="SELECT * FROM karyawan LIMIT $start, $hal";
+                                                $sql = "SELECT * FROM karyawan";
+                                                $sql1 = "SELECT * FROM karyawan limit $start,$hal";
+                                                // if(isset($_POST["asc"])){
+                                                //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama ASC LIMIT $start, $hal";
+                                                // }
+                                                // if(isset($_POST["desc"])){
+                                                //     $sql1 = "SELECT * FROM mahasiswa ORDER BY nama DESC LIMIT $start, $hal";
+                                                // }
                                             }
-                                                $query = mysqli_query($db, $sql);
-                                                $query1 = mysqli_query($db, $sql1);
-                                                $total = mysqli_num_rows($query);
-                                                $pages = ceil($total/$hal);
-                                                $no = $start + 1;
+                                            $query = mysqli_query($db, $sql);
+                                            $query1 = mysqli_query($db, $sql1);
+                                            $total = mysqli_num_rows($query);
+                                            $pages = ceil($total/$hal);
+                                            $no = $start + 1;
                                 ?>
                                 <?php while($list=mysqli_fetch_array($query1)) : 
                                 //$no++; 
