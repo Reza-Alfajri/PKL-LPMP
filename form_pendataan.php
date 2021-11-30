@@ -1,9 +1,7 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['username'])) {
-        header("Location: login.php");
-    }
+    include("koneksi.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -89,7 +87,7 @@
             <h2 data-aos="zoom-out" data-aos-delay="170">Daftarkan Diri Anda</h2>
             <div class="container"> 
                 <div class="ListDaftar" data-aos="fade-down" data-aos-delay="200">
-                    <form action="proses_pendataan.php" method="POST">
+                    <form action="proses_daftar.php" method="POST">
                       <fieldset>
                           <p><label for="timestamp">Timestamp : </label>
                               <input type="date" name="timestamp" class="form-control"></p>
@@ -133,7 +131,7 @@
                           </select> 
                           <p><label for="nomor_kamar">No. Kamar: </label>
                               <input type="text" name="nomor_kamar" class="form-control"></p>
-                          <p><input type="submit" value="Kirim" name="kirim" class="btn btn-primary"></p>
+                          <p><input type="submit" value="Daftar" name="daftar" class="btn btn-primary"></p>
                       </fieldset>
                   </form>
                 </div>
