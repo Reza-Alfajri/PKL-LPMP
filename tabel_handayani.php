@@ -118,35 +118,46 @@
                                         <button class="edit" aria-label="close" onclick="kamar()">
                                         <span aria-hidden="true"><i class="fa fa-edit"></i></span>
 										</button>
+                                        <a class="edit" aria-label="close" href="form_handayani.php?nomor_kamar=<?=$list['nomor_kamar']; ?>" onclick="return edit(event)">
+                                        <span aria-hidden="true"><i class="fa fa-edit"></i></span>
+                                        </a>
                                         <script type="text/javascript">
-  										function kamar(){
-											Swal.fire({
-  											title: 'Yakin memilih kamar ini?',
-  											showCancelButton: true,
-											confirmButtonText: 'Ya',
-										}).then((result) => {
-												if (result.isConfirmed) {
-													window.location.href = "form_handayani.php?nomor_kamar=<?=$list['nomor_kamar']; ?>";
-												}
-											})
-										}
-										</script>
-                                        <button class="close" aria-label="Close" onclick="hapus()">
+  						function edit(ev){
+                                            	ev.preventDefault();
+                                            	var urlToRedirect = ev.currentTarget.getAttribute('href'); 
+                                            	console.log(urlToRedirect);
+						Swal.fire({
+  							title: 'Yakin akan memilih kamar ini?',
+                        	                	icon: "question",
+  							showCancelButton: true,
+							confirmButtonText: 'Ya',
+						}).then((result) => {
+							if (result.isConfirmed) {
+							window.location.href = urlToRedirect;
+							}
+						})
+						}
+					</script>
+                                        <a class="edit" aria-label="close" href="hapus_handayani.php?nomor_kamar=<?=$list['nomor_kamar']; ?>" onclick="return hapus(event)">
                                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
-										</button>
-										<script type="text/javascript">
-  										function hapus(){
-											Swal.fire({
-  											title: 'Anda yakin akan menghapus data?',
-  											showCancelButton: true,
-											confirmButtonText: 'Hapus',
-										}).then((result) => {
-												if (result.isConfirmed) {
-													window.location.href = "hapus_handayani.php?nomor_kamar=<?=$list['nomor_kamar']; ?>";
-												}
-											})
-										}
-										</script>
+                                        </a>
+					<script type="text/javascript">
+  						function hapus(ev){
+                                            	ev.preventDefault();
+                                            	var urlToRedirect = ev.currentTarget.getAttribute('href'); 
+                                            	console.log(urlToRedirect);
+						Swal.fire({
+  							title: 'Check Out?',
+                        	                	icon: "question",
+  							showCancelButton: true,
+							confirmButtonText: 'Ya',
+						}).then((result) => {
+							if (result.isConfirmed) {
+							window.location.href = urlToRedirect;
+							}
+						})
+						}
+					</script>
                                     </td>
                                 </tr>
 							    <?php endwhile; ?>
