@@ -10,6 +10,8 @@
         $tanggal_akhir = $_POST['tanggal_akhir'];
         $nik = $_POST['nik'];
         $nama_tamu = $_POST['nama_tamu'];
+        $jenis_kelamin = $_POST['jenis_kelamin'];
+        $tanggal_lahir = $_POST['tanggal_lahir'];
         $statusco = "Terisi";
         $kota = $_POST['kota'];
         $jabatan = $_POST['jabatan'];
@@ -18,7 +20,7 @@
         
         //buat query update
         $sql = "UPDATE handayani SET timestamp='$timestamp', nama_kegiatan='$nama_kegiatan', tanggal_awal='$tanggal_awal', tanggal_akhir='$tanggal_akhir',
-        nik='$nik', nama_tamu='$nama_tamu', statusco='$statusco', kota='$kota', jabatan='$jabatan', nama_kantor='$nama_kantor', no_hp='$no_hp' WHERE nomor_kamar='$nomor_kamar'";
+        nik='$nik', nama_tamu='$nama_tamu', statusco='$statusco', kota='$kota', jabatan='$jabatan', jenis_kelamin='$jenis_kelamin', tanggal_lahir='$tanggal_lahir', nama_kantor='$nama_kantor', no_hp='$no_hp' WHERE nomor_kamar='$nomor_kamar'";
         $query = mysqli_query($db, $sql);
         //apakah query berhasil tersimpan
         if( $query ){
