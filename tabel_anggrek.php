@@ -20,13 +20,16 @@
 					<h2 class="heading-section">Tamu Wisma Anggrek</h2>
 				</div>
                 <div class="col-md-6 text-center mb-5">
-                    <form action="tabel_anggrek.php" method="GET">
+                    <form action="tabel_anggrek
+                    .php" method="GET">
                         <input type="text" name="cari" value="<?php if(isset($_GET['cari'])){echo $_GET['cari'];}?>">
                         <input type="submit" value="cari">
-                        <input type="radio" name="kategori" value="carikamar" checked>
-                        <label for="nama">Nomor Kamar</label>
-                        <input type="radio" name="kategori" value="caristatusco">
-                        <label for="nip">Status Check Out</label> <br>
+                        <input type="radio" name="kategori" value="cariNama" checked>
+                        <label for="nama">Nama Tamu</label>
+                        <input type="radio" name="kategori" value="cariNIP">
+                        <label for="nip">NIP</label>
+                        <input type="radio" name="kategori" value="cariKamar">
+                        <label for="nomor">Nomor Kamar</label> <br>
                         <a href="tabel_anggrek.php"><i class="fa fa-refresh"></i>Reset</a>
                     </form>
 				</div>
@@ -56,7 +59,7 @@
 						    </thead>
 						    <tbody>
                                 <?php
-                                        $hal=26;
+                                        $hal=10;
                                         $page=isset($_GET['hal'])?(int)$_GET['hal']:1;
                                         $start=($page>1)?($page*$hal)-$hal:0;
                                         if(isset($_GET['cari'])){
@@ -65,8 +68,8 @@
                                         }
                                         if(isset($_GET['cari'])){
                                             $cari = $_GET['cari'];
-                                            $sql = "SELECT * FROM anggrek WHERE nomor_kamar like '%".$cari."%'";
-                                            $sql1 = "SELECT * FROM anggrek WHERE nomor_kamar LIKE '%$cari%' limit $start,$hal";
+                                            $sql = "SELECT * FROM anggrek WHERE nama_tamu like '%".$cari."%'";
+                                            $sql1 = "SELECT * FROM anggrek WHERE nama_tamu LIKE '%$cari%' limit $start,$hal";
                                         } else {
                                             $sql = "SELECT * FROM anggrek";
                                             $sql1 = "SELECT * FROM anggrek limit $start,$hal";
@@ -74,23 +77,22 @@
 
                                         if (isset($_GET['cari']) && isset($_GET['kategori'])) {
                                                 $cari = $_GET['cari'];
-                                                if ($_GET['kategori'] == 'carikamar') {
+                                                if ($_GET['kategori'] == 'cariNama') {
+                                                    $sql = "SELECT * FROM anggrek WHERE nama_tamu LIKE '%$cari%'";
+                                                    $sql1 = "SELECT * FROM anggrek WHERE nama_tamu LIKE '%$cari%' limit $start,$hal";
+                                                } elseif ($_GET['kategori'] == 'cariNIP') {
+                                                    $sql = "SELECT * FROM anggrek WHERE nip LIKE '%$cari%'";
+                                                    $sql1 = "SELECT * FROM anggrek WHERE nip LIKE '%$cari%' limit $start,$hal";
+                                                } else {
                                                     $sql = "SELECT * FROM anggrek WHERE nomor_kamar LIKE '%$cari%'";
                                                     $sql1 = "SELECT * FROM anggrek WHERE nomor_kamar LIKE '%$cari%' limit $start,$hal";
-                                                    $sql2 = "SELECT * FROM anggrek WHERE statusco='Kosong'";
-                                                } else {
-                                                    $sql = "SELECT * FROM anggrek WHERE statusco LIKE '%$cari%'";
-                                                    $sql1 = "SELECT * FROM anggrek WHERE statusco  LIKE '%$cari%' limit $start,$hal";
-                                                    $sql2 = "SELECT * FROM anggrek WHERE statusco='Kosong'";
                                                     }  
                                             } else {
                                                 $sql = "SELECT * FROM anggrek";
                                                 $sql1 = "SELECT * FROM anggrek limit $start,$hal";
-                                                $sql2 = "SELECT * FROM anggrek WHERE statusco='Kosong'";
                                             }
                                             $query = mysqli_query($db, $sql);
                                             $query1 = mysqli_query($db, $sql1);
-                                            $query2 = mysqli_query($db, $sql2);
                                             $total = mysqli_num_rows($query);
                                             $pages = ceil($total/$hal);
                                             $no = $start + 1;
@@ -118,42 +120,42 @@
                                         <span aria-hidden="true"><i class="fa fa-edit"></i></span>
                                         </a>
                                         <script type="text/javascript">
-  					    	function edit(ev){
-                                            		ev.preventDefault();
-                                            		var urlToRedirect = ev.currentTarget.getAttribute('href'); 
-                                            		console.log(urlToRedirect);
-					    		Swal.fire({
-  							title: 'Yakin akan memilih kamar ini?',
-                                            		icon: "question",
-  							showCancelButton: true,
-							confirmButtonText: 'Ya',
-						}).then((result) => {
-							if (result.isConfirmed) {
-								window.location.href = urlToRedirect;
-							}
-						})
-						}
-					</script>
+  										function edit(ev){
+                                            ev.preventDefault();
+                                            var urlToRedirect = ev.currentTarget.getAttribute('href'); 
+                                            console.log(urlToRedirect);
+											Swal.fire({
+  											title: 'Yakin akan memilih kamar ini?',
+                                            icon: "question",
+  											showCancelButton: true,
+											confirmButtonText: 'Ya',
+										}).then((result) => {
+												if (result.isConfirmed) {
+													window.location.href = urlToRedirect;
+												}
+											})
+										}
+										</script>
                                         <a class="edit" aria-label="close" href="hapus_anggrek.php?nomor_kamar=<?=$list['nomor_kamar']; ?>" onclick="return hapus(event)">
                                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
                                         </a>
-					<script type="text/javascript">
-  					    	function hapus(ev){
-                                            		ev.preventDefault();
-                                            		var urlToRedirect = ev.currentTarget.getAttribute('href'); 
-                                            		console.log(urlToRedirect);
-					    		Swal.fire({
-  							title: 'Yakin akan memilih kamar ini?',
-                                            		icon: "question",
-  							showCancelButton: true,
-							confirmButtonText: 'Ya',
-						}).then((result) => {
-							if (result.isConfirmed) {
-								window.location.href = urlToRedirect;
-							}
-						})
-						}
-					</script>
+										<script type="text/javascript">
+  										function hapus(ev){
+                                            ev.preventDefault();
+                                            var urlToRedirect = ev.currentTarget.getAttribute('href'); 
+                                            console.log(urlToRedirect);
+											Swal.fire({
+  											title: 'Anda yakin akan menghapus data?',
+                                            icon: "warning",
+  											showCancelButton: true,
+											confirmButtonText: 'Hapus',
+										}).then((result) => {
+												if (result.isConfirmed) {
+													window.location.href = urlToRedirect;
+												}
+											})
+										}
+										</script>
                                     </td>
                                 </tr>
 							    <?php endwhile; ?>
@@ -171,7 +173,6 @@
                                 
                         <?php endfor; ?>
                         <p>Total Data : <?= mysqli_num_rows($query); ?></p>
-                        <p>Jumlah Kamar Kosong : <?= mysqli_num_rows($query2); ?></p>
 					</div>
 				</div>
 			</div>
