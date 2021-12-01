@@ -139,19 +139,19 @@
                                         </a>
 					<script type="text/javascript">
   					    	function hapus(ev){
-                                            		ev.preventDefault();
-                                            		var urlToRedirect = ev.currentTarget.getAttribute('href'); 
-                                            		console.log(urlToRedirect);
-					    		Swal.fire({
-  							title: 'Yakin akan memilih kamar ini?',
-                                            		icon: "question",
-  							showCancelButton: true,
+                                    		ev.preventDefault();
+                                    		var urlToRedirect = ev.currentTarget.getAttribute('href'); 
+                                    		console.log(urlToRedirect);
+					        Swal.fire({
+  				                    	title: 'Data akan terhapus!',
+                                            		icon: "warning",
+  				                    	showCancelButton: true,
 							confirmButtonText: 'Ya',
-						}).then((result) => {
-							if (result.isConfirmed) {
-								window.location.href = urlToRedirect;
-							}
-						})
+						        }).then((result) => {
+								if (result.isConfirmed) {
+									window.location.href = urlToRedirect;
+							        }
+						        })
 						}
 					</script>
                                     </td>
