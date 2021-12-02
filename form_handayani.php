@@ -105,36 +105,36 @@
                         <fieldset>
                             
                         <p><label for="timestamp">Timestamp : </label>
-                        <input type="datetime" name="timestamp" class="form-control" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date("Y/m/d H:i:s"); ?>" readonly/></p>
-                          <p><label for="nama_kegiatan">Nama Kegiatan: </label>
-                              <input type="text" name="nama_kegiatan" class="form-control" required></p>
-                          <p><label for="tanggal_awal">Tanggal Awal : </label>
-                              <input type="date" name="tanggal_awal" class="form-control" required></p>
-                          <p><label for="tanggal_akhir">Tanggal Akhir : </label>
-                              <input type="date" name="tanggal_akhir" class="form-control" required></p> 
-                          <p><label for="nama_tamu">Nama Tamu : </label>
-                              <input type="text" name="nama_tamu" class="form-control" required></p>
-                          <p><label for="nip">NIK : </label>
-                              <input type="text" name="nik" class="form-control" required></p>
-                          <p><label>Jenis Kelamin : </label>
-                            <select name="jenis_kelamin" class="custom-select" required>
+                            <input type="datetime" name="timestamp" class="form-control" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date("Y/m/d H:i:s"); ?>" readonly /></p>
+                        <p><label for="nama_kegiatan">Nama Kegiatan: </label>
+                            <input type="text" name="nama_kegiatan" class="form-control" required></p>
+                        <p><label for="tanggal_awal">Tanggal Awal : </label>
+                            <input type="date" name="tanggal_awal" class="form-control" required></p>
+                        <p><label for="tanggal_akhir">Tanggal Akhir : </label>
+                            <input type="date" name="tanggal_akhir" class="form-control" required></p> 
+                        <p><label for="nip">NIK : </label>
+                            <input type="text" id="nik" name="nik" onkeyup="isi_otomatis()" class="form-control" required></p>
+                        <p><label for="nama_tamu">Nama Tamu : </label>
+                            <input type="text" id="nama_tamu" name="nama_tamu" class="form-control" required></p>
+                        <p><label>Jenis Kelamin : </label>
+                            <select name="jenis_kelamin" id="jenis_kelamin" class="custom-select" required>
                                 <option value="">-- jenis kelamin --</option>
-                                <option value="pria">Pria</option>
-                                <option value="wanita">Wanita</option>
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
                             </select> 
-                            <p><label for="tanggal_lahir">Tanggal Lahir : </label>
-                              <input type="date" name="tanggal_lahir" class="form-control" required></p>
-                            <p><label for="kota">Kota : </label>
-                                <input type="text" name="kota" class="form-control" required></p>
-                            <p><label for="jabatan">Jabatan : </label>
-                                <input type="text" name="jabatan" class="form-control" required></p>
-                            <p><label for="nama_kantor">Nama Kantor : </label>
-                                <input type="text" name="nama_kantor" class="form-control" required></p>
-                            <p><label for="no_hp">No. HP : </label>
-                                <input type="text" name="no_hp" class="form-control" required></p>
-                            <p><label for="nomor_kamar">No. Kamar: </label>
-                                <input type="text" name="nomor_kamar" class="form-control" value="<?php echo $list['nomor_kamar']?>" readonly></p>
-                            <p><input type="submit" value="Simpan" name="simpan" class="btn btn-primary"></p>
+                        <p><label for="tanggal_lahir">Tanggal Lahir : </label>
+                            <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" required></p>
+                        <p><label for="kota">Kota : </label>
+                            <input type="text" name="kota" id="kota" class="form-control" required></p>
+                        <p><label for="jabatan">Jabatan : </label>
+                            <input type="text" name="jabatan" id="jabatan" class="form-control" required></p>
+                        <p><label for="nama_kantor">Nama Kantor : </label>
+                            <input type="text" name="nama_kantor" id="nama_kantor" class="form-control" required></p>
+                        <p><label for="no_hp">No. HP : </label>
+                            <input type="text" name="no_hp" id="no_hp" class="form-control" required></p>
+                        <p><label for="nomor_kamar">No. Kamar: </label>
+                            <input type="text" name="nomor_kamar" class="form-control" value="<?php echo $list['nomor_kamar']?>" readonly></p>
+                        <p><input type="submit" value="Simpan" name="simpan" class="btn btn-primary"></p>
                         </fieldset>
                     </form>
                 </div>
@@ -174,5 +174,26 @@
 
     <!-- JS Utama -->
     <script src="assets/js/main.js"></script>
+    <!-- AUTOFILL -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript">
+            function isi_otomatis(){
+                var nik = $("#nik").val();
+                $.ajax({
+                    url: 'ajax.php',
+                    data:"nik="+nik ,
+                }).success(function (data) {
+                    var json = data,
+                    obj = JSON.parse(json);
+                    $('#nama_tamu').val(obj.nama_tamu);
+                    $('#jenis_kelamin').val(obj.jenis_kelamin);
+                    $('#tanggal_lahir').val(obj.tanggal_lahir);
+                    $('#kota').val(obj.kota);
+                    $('#jabatan').val(obj.jabatan);
+                    $('#nama_kantor').val(obj.nama_kantor);
+                    $('#no_hp').val(obj.no_hp);
+                });
+            }
+        </script>
   </body>
 </html>
